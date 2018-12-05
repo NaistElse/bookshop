@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Add new post &laquo; Admin</title>
+  <link rel="stylesheet" href="../../public/vendors/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../public/vendors/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="../../public/vendors/nprogress/nprogress.css">
+  <link rel="stylesheet" href="../../public/css/admin.css">
+  <script src="../../public/vendors/nprogress/nprogress.js"></script>
+</head>
+<body>
+  <script>NProgress.start()</script>
+
+  <div class="main">
+
+    {{include '../_partials/navbar.html'}}
+
+    <div class="container-fluid">
+      <div class="page-title">
+        <h1>添加图书</h1>
+      </div>
+      <!-- 有错误信息时展示 -->
+      {{ if messages === 'success' }}
+      <div class="alert alert-success">
+        <strong>添加成功</strong>
+      </div>
+      {{ else if messages === 'failed' }}
+      <div class="alert alert-danger">
+        <strong>添加失败</strong>
+      </div>
+      {{ else if messages === 'defauts' }}
+
+      {{ /if }}
+
+
+      <form class="row" method="post" action="book-add" enctype="application/x-www-form-urlencoded multipart/form-data">
+        {{ if query }}
+            <div class="col-md-9">
+              <div class="form-group">
+                <label for="title">标题</label>
+                <input id="title" class="form-control input-lg" name="title" type="text" placeholder="图书标题" value="{{ query.title }}">
+              </div>
+              <div class="form-group">
+                <label for="content">简介</label>
+                <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="图书简介">{{ query.content }}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="toc">TOC</label>
+                <textarea id="toc" class="form-control input-lg" name="toc" cols="30" rows="10" placeholder="目录">{{ query.toc }}</textarea>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="author">作者</label>
+                <input id="author" class="form-control input-lg" name="author" type="text" placeholder="作者" value="{{ query.author }}">
+              </div>
+              <div class="form-group">
+                <label for="category">分类</label>
+                <select name="category" class="form-control input-sm">
+
+                    {{ each categoriesdata }}
+                      <option value="{{ $value.Id }}" {{ $value.Id == query.category ? ' selected' : '' }}>{{ $value.Name }}</option>
+                    {{ /each }}
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="publisher">出版社</label>
+                <select name="publishers" class="form-control input-sm">
+
+                  {{ each publishersdata }}
+                    <option value="{{ $value.Id }}" {{ $value.Id == query.publishers ? ' selected' : '' }}>{{ $value.Name }}</option>
+                  {{ /each }}
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cover">封面</label>
+                <!-- show when image chose -->
+                <img class="help-block thumbnail" style="display: none">
+                <input id="cover" class="form-control" name="cover" type="file">
+              </div>
+              <div class="form-group">
+                <label for="publishdate">出版时间</label>
+                <input id="publishdate" class="form-control" name="publishdate" type="date" value="{{ query.publishdate }}">
+              </div>
+              <div class="form-group">
+                <label for="ISBN">ISBN</label>
+                <input id="ISBN" class="form-control input-lg" name="ISBN" type="text" placeholder="ISBN" value="{{ query.ISBN }}">
+              </div>
+              <div class="form-group">
+                <label for="wordcount">字数</label>
+                <input id="wordcount" class="form-control input-lg" name="wordcount" type="text" placeholder="字数" value="{{ query.wordcount }}">
+              </div>
+              <div class="form-group">
+                <label for="price">售价</label>
+                <input id="price" class="form-control input-lg" name="price" type="text" placeholder="售价" value="{{ query.price }}">
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">保存</button>
+              </div>
+            </div>
+
+        {{ else }}
+          <div class="col-md-9">
+            <div class="form-group">
+              <label for="title">标题</label>
+              <input id="title" class="form-control input-lg" name="title" type="text" placeholder="图书标题">
+            </div>
+            <div class="form-group">
+              <label for="content">简介</label>
+              <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="图书简介"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="toc">TOC</label>
+              <textarea id="toc" class="form-control input-lg" name="toc" cols="30" rows="10" placeholder="目录"></textarea>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="author">作者</label>
+              <input id="author" class="form-control input-lg" name="author" type="text" placeholder="作者">
+            </div>
+            <div class="form-group">
+              <label for="category">分类</label>
+              <select name="category" class="form-control input-sm">
+
+                  {{ each categoriesdata }}
+                    <option value="{{ $value.Id }}">{{ $value.Name }}</option>
+                  {{ /each }}
+
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="publisher">出版社</label>
+              <select name="publishers" class="form-control input-sm">
+
+                {{ each publishersdata }}
+                  <option value="{{ $value.Id }}">{{ $value.Name }}</option>
+                {{ /each }}
+
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cover">封面</label>
+              <!-- show when image chose -->
+              <img class="help-block thumbnail" style="display: none">
+              <input id="cover" class="form-control" name="cover" type="file">
+            </div>
+            <div class="form-group">
+              <label for="publishdate">出版时间</label>
+              <input id="publishdate" class="form-control" name="publishdate" type="date">
+            </div>
+            <div class="form-group">
+              <label for="ISBN">ISBN</label>
+              <input id="ISBN" class="form-control input-lg" name="ISBN" type="text" placeholder="ISBN">
+            </div>
+            <div class="form-group">
+              <label for="wordcount">字数</label>
+              <input id="wordcount" class="form-control input-lg" name="wordcount" type="text" placeholder="字数">
+            </div>
+            <div class="form-group">
+              <label for="price">售价</label>
+              <input id="price" class="form-control input-lg" name="price" type="text" placeholder="售价">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">保存</button>
+            </div>
+          </div>
+        {{ /if }}
+      </form>
+    </div>
+  </div>
+
+  {{include '../_partials/sidebar.html'}}
+
+  <script src="../../public/vendors/jquery/jquery.js"></script>
+  <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
+  <script>NProgress.done()</script>
+</body>
+</html>

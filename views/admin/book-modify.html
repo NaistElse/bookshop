@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard &laquo; Admin</title>
+  <link rel="stylesheet" href="../../public/vendors/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../public/vendors/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="../../public/vendors/nprogress/nprogress.css">
+  <link rel="stylesheet" href="../../public/css/admin.css">
+  <script src="../../public/vendors/nprogress/nprogress.js"></script>
+</head>
+<body>
+  <script>NProgress.start()</script>
+
+  <div class="main">
+
+    {{include '../_partials/navbar.html'}}
+
+    <div class="container-fluid">
+      <div class="page-title">
+        <h1>图书详情</h1>
+        <a href="book-add" class="btn btn-primary btn-xs">添加图书</a>
+      </div>
+      <!-- 有错误信息时展示 -->
+      <!-- <div class="alert alert-danger">
+        <strong>错误！</strong>发生XXX错误
+      </div> -->
+      <div class="page-action">
+
+    <form class="" action="/book-modify" method="post" enctype="multipart/form-data application/x-www-form-urlencoded" >
+       <table class="table table-striped table-bordered table-hover">
+        <tbody>
+            <tr>
+              <th>标题</th>
+              <input type="hidden" name="Id" value="{{ book.Id }}">
+                <td><input type="text" class="form-control" name="Title" value="{{ book.Title }}"></td>
+            </tr>
+            <tr>
+              <th>作者</th>
+                <td><input type="text" class="form-control" name="Author" value="{{ book.Author }}"></td>
+            </tr>
+            <tr>
+              <th>分类</th>
+                <td>
+                  <select name="Category" class="form-control input-sm">
+
+                    {{ each category }}
+                      <option value="{{ $value.Id }}" {{ book.Categoryname && book.Categoryname == $value.Name ? ' selected' : '' }}>{{ $value.Name }}</option>
+                    {{ /each }}
+
+                  </select>
+                </td>
+            </tr>
+            <tr>
+              <th>出版社</th>
+                <td>
+                  <select name="publisher" class="form-control input-sm">
+
+                      {{ each publisher }}
+                        <option value="{{ $value.Id }}" {{ book.Publishername && book.Publishername == $value.Name ? ' selected' : '' }}>{{ $value.Name }}</option>
+                      {{ /each }}
+
+                  </select>
+                </td>
+            </tr>
+            <tr>
+              <th>封面</th>
+                <td><input type="file" class="form-control" name="Cover" value=""></td>
+            </tr>
+            <tr>
+              <th>出版时间</th>
+                <td><input type="date" class="form-control" name="PublishDate" value="{{ book.PublishDate | dateFormat }}"></td>
+            </tr>
+            <tr>
+              <th>ISBN</th>
+                <td><input type="text" class="form-control" name="ISBN" value="{{ book.ISBN }}"></td>
+            </tr>
+            <tr>
+              <th>字数</th>
+                <td><input type="text" class="form-control" name="WordsCount" value="{{ book.WordsCount }}"></td>
+            </tr>
+            <tr>
+              <th>售价</th>
+                <td><input type="text" class="form-control" name="UnitPrice" value="{{ book.UnitPrice }}"></td>
+            </tr>
+            <tr>
+              <th>简介</th>
+                <td><textarea class="form-control" name="ContentDescription" rows="8" cols="80" value="">{{@ book.ContentDescription }}</textarea></td>
+            </tr>
+            <tr>
+              <th>TOC</th>
+                <td><textarea class="form-control" name="TOC" rows="8" cols="80" value="">{{@ book.TOC }}</textarea></td>
+            </tr>
+            <tr>
+              <th>操作</th>
+                <td><input class="btn btn-success" type="submit" name="" value="确认修改"></td>
+            </tr>
+        </tbody>
+     </table>
+
+  </form>
+
+
+    </div>
+  </div>
+</div>
+
+  {{include '../_partials/sidebar.html'}}
+
+
+
+  <script src="../../public/vendors/jquery/jquery.js"></script>
+  <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
+
+  <script>NProgress.done()</script>
+</body>
+</html>
