@@ -13,21 +13,26 @@
   <script>NProgress.start()</script>
 
   <div class="main">
-    <nav class="navbar">
-      <button class="btn btn-default navbar-btn fa fa-bars"></button>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="profile.html"><i class="fa fa-user"></i>个人中心</a></li>
-        <li><a href="login.html"><i class="fa fa-sign-out"></i>退出</a></li>
-      </ul>
-    </nav>
+
+    {{include '../_partials/navbar.html'}}
+
     <div class="container-fluid">
       <div class="page-title">
-        <h1>所有评论</h1>
+        <h1>所有用户</h1>
       </div>
       <!-- 有错误信息时展示 -->
-      <!-- <div class="alert alert-danger">
-        <strong>错误！</strong>发生XXX错误
-      </div> -->
+      {{ if messages === 'success' }}
+      <div class="alert alert-success">
+        <strong>更新状态成功</strong>
+      </div>
+      {{ else if messages === 'failed' }}
+      <div class="alert alert-danger">
+        <strong>更新状态失败</strong>
+      </div>
+      {{ else if messages === 'defauts' }}
+
+      {{ /if }}
+
       <div class="page-action">
         <!-- show when multiple checked -->
         <div class="btn-batch" style="display: none">
@@ -47,93 +52,39 @@
         <thead>
           <tr>
             <th class="text-center" width="40"><input type="checkbox"></th>
-            <th>作者</th>
-            <th>评论</th>
-            <th>评论在</th>
-            <th>提交于</th>
-            <th>状态</th>
+            <th>登录名称</th>
+            <th>姓名</th>
+            <th>地址</th>
+            <th>手机号码</th>
+            <th>邮箱</th>
+            <th>权限</th>
             <th class="text-center" width="100">操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="danger">
-            <td class="text-center"><input type="checkbox"></td>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2016/10/07</td>
-            <td>未批准</td>
-            <td class="text-center">
-              <a href="post-add.html" class="btn btn-info btn-xs">批准</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2016/10/07</td>
-            <td>已批准</td>
-            <td class="text-center">
-              <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2016/10/07</td>
-            <td>已批准</td>
-            <td class="text-center">
-              <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+          {{ each data }}
+
+            <tr {{ $value.state === '正常' ? ' class=success' : ' class=danger' }}>
+              <td class="text-center"><input type="checkbox"></td>
+              <td>{{ $value.LoginId }}</td>
+              <td>{{ $value.Name }}</td>
+              <td>{{ $value.Address }}</td>
+              <td>{{ $value.Phone }}</td>
+              <td>{{ $value.Mail }}</td>
+              <td>{{ $value.role }}</td>
+              <td class="text-center">
+                <a href="customer?id={{ $value.Id }}&state={{ $value.state === '正常' ? 2 : 1 }}" class="btn {{ $value.state === '正常' ? 'btn-info' : 'btn-danger' }} btn-xs">{{ $value.state }}</a>
+              </td>
+            </tr>
+
+          {{ /each }}
+
         </tbody>
       </table>
     </div>
   </div>
 
-  <div class="aside">
-    <div class="profile">
-      <img class="avatar" src="../uploads/avatar.jpg">
-      <h3 class="name">布头儿</h3>
-    </div>
-    <ul class="nav">
-      <li>
-        <a href="index.html"><i class="fa fa-dashboard"></i>仪表盘</a>
-      </li>
-      <li>
-        <a href="#menu-posts" class="collapsed" data-toggle="collapse">
-          <i class="fa fa-thumb-tack"></i>文章<i class="fa fa-angle-right"></i>
-        </a>
-        <ul id="menu-posts" class="collapse">
-          <li><a href="posts.html">所有文章</a></li>
-          <li><a href="post-add.html">写文章</a></li>
-          <li><a href="categories.html">分类目录</a></li>
-        </ul>
-      </li>
-      <li class="active">
-        <a href="comments.html"><i class="fa fa-comments"></i>评论</a>
-      </li>
-      <li>
-        <a href="users.html"><i class="fa fa-users"></i>用户</a>
-      </li>
-      <li>
-        <a href="#menu-settings" class="collapsed" data-toggle="collapse">
-          <i class="fa fa-cogs"></i>设置<i class="fa fa-angle-right"></i>
-        </a>
-        <ul id="menu-settings" class="collapse">
-          <li><a href="nav-menus.html">导航菜单</a></li>
-          <li><a href="slides.html">图片轮播</a></li>
-          <li><a href="settings.html">网站设置</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+  {{include '../_partials/sidebar.html'}}
 
   <script src="../../public/vendors/jquery/jquery.js"></script>
   <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
