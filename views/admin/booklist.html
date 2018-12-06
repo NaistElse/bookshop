@@ -100,32 +100,32 @@
   <script src="../../public/vendors/jquery/jquery.js"></script>
   <script type="text/javascript">
         $(function($){
-        var $theadcheckbox=$('thead input');
-        var $tbodycheckboxs=$('tbody input');
-        var $btndelete=$('#btn_delete');
+        var $theadcheckbox=$('thead input')
+        var $tbodycheckboxs=$('tbody input')
+        var $btndelete=$('#btn_delete')
 
-        var allcheckeds=[];
+        var allcheckeds=[]
         $tbodycheckboxs.on('change',function(){
-          var id=$(this).data('id');
+          var id=$(this).data('id')
 
           if($(this).prop('checked')){
-            allcheckeds.push(id);
+            allcheckeds.push(id)
           }else {
-            allcheckeds.splice(allcheckeds.indexOf(id),1);
+            allcheckeds.splice(allcheckeds.indexOf(id),1)
           }
-          allcheckeds.length ? $btndelete.fadeIn() : $btndelete.fadeOut();
-          $btndelete.prop('search','?id='+allcheckeds);
+          allcheckeds.length ? $btndelete.fadeIn() : $btndelete.fadeOut()
+          $btndelete.prop('search','?id='+allcheckeds)
         });
 
         $theadcheckbox.on('change',function(){
-          allcheckeds=[];
+          allcheckeds=[]
 
-          var checked=$(this).prop('checked');
+          var checked=$(this).prop('checked')
 
-          $tbodycheckboxs.prop('checked', checked).trigger('change');
+          $tbodycheckboxs.prop('checked', checked).trigger('change')
 
-        });
-      });
+        })
+      })
   </script>
   <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
   <script>NProgress.done()</script>

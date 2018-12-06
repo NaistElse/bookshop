@@ -21,40 +21,89 @@
         <h1>分类/出版社目录</h1>
       </div>
       <!-- 有错误信息时展示 -->
-      <!-- <div class="alert alert-danger">
-        <strong>错误！</strong>发生XXX错误
-      </div> -->
+
+      {{ if messages === 'success' }}
+        <div class="alert alert-success">
+          <strong>添加成功</strong>
+        </div>
+      {{ else if messages === 'failed' }}
+        <div class="alert alert-danger">
+          <strong>添加失败</strong>
+        </div>
+      {{ else if messages === 'updatesuccess' }}
+          <div class="alert alert-success">
+            <strong>更新成功</strong>
+          </div>
+      {{ else if messages === 'updateerror' }}
+          <div class="alert alert-danger">
+            <strong>更新失败</strong>
+          </div>
+      {{ else if messages === 'defauts' }}
+
+      {{ /if }}
+
       <div class="row">
         <div class="col-md-4">
-          <form>
+          <form method="post" action="categories">
             <h2>添加新分类目录</h2>
             <div class="form-group">
               <label for="name">名称</label>
-              <input id="name" class="form-control" name="name" type="text" placeholder="分类名称">
+
+              {{ if data && data.class === 'category' }}
+                <input id="name" class="form-control" name="name" type="text" placeholder="分类名称" value="{{ data.Name }}">
+                <input type="hidden" name="kind" value="category">
+                <input type="hidden" name="id" value="{{ data.Id }}">
+              {{ else }}
+                <input id="name" class="form-control" name="name" type="text" placeholder="分类名称">
+                <input type="hidden" name="stauts" value="category">
+              {{ /if }}
+
+
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">添加</button>
+
+              {{ if data && data.class === 'category' }}
+                <button class="btn btn-primary" type="submit">更新</button>
+              {{ else }}
+                <button class="btn btn-primary" type="submit">添加</button>
+              {{ /if }}
+
             </div>
           </form>
           <hr>
-          <form>
+          <form method="post" action="categories">
             <h2>添加新出版社目录</h2>
             <div class="form-group">
               <label for="name">名称</label>
-              <input id="name" class="form-control" name="name" type="text" placeholder="出版社名称">
+
+              {{ if data && data.class === 'publisher' }}
+                <input id="name" class="form-control" name="name" type="text" placeholder="出版社名称" value="{{ data.Name }}">
+                <input type="hidden" name="kind" value="publisher">
+                <input type="hidden" name="id" value="{{ data.Id }}">
+              {{ else }}
+                <input id="name" class="form-control" name="name" type="text" placeholder="出版社名称">
+                <input type="hidden" name="stauts" value="publisher">
+              {{ /if }}
+
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">添加</button>
+
+              {{ if data && data.class === 'publisher' }}
+                <button class="btn btn-primary" type="submit">更新</button>
+              {{ else }}
+                <button class="btn btn-primary" type="submit">添加</button>
+              {{ /if }}
+
             </div>
           </form>
         </div>
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a id="btn_delete_cate" class="btn btn-danger btn-sm" href="/category-delete" style="display: none">批量删除</a>
           </div>
           <h3>分类目录</h3>
-          <table class="table table-striped table-bordered table-hover">
+          <table id="category_table" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <th class="text-center" width="40"><input type="checkbox"></th>
@@ -66,11 +115,11 @@
 
               {{ each categoriesdata }}
                 <tr>
-                  <td class="text-center"><input type="checkbox"></td>
+                  <td class="text-center"><input data-id="{{ $value.Id }}" type="checkbox"></td>
                   <td>{{ $value.Name }}</td>
                   <td class="text-center">
-                    <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                    <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+                    <a href="categories?id={{ $value.Id }}&name=category" class="btn btn-info btn-xs">编辑</a>
+                    <a href="category-delete?id={{ $value.Id }}&name=category" class="btn btn-danger btn-xs">删除</a>
                   </td>
                 </tr>
               {{ /each }}
@@ -80,10 +129,10 @@
           </table>
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a id="btn_delete_pub" class="btn btn-danger btn-sm" href="/category-delete" style="display: none">批量删除</a>
           </div>
           <h3>出版社目录</h3>
-          <table class="table table-striped table-bordered table-hover">
+          <table id="publisher_table" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <th class="text-center" width="40"><input type="checkbox"></th>
@@ -95,11 +144,11 @@
 
               {{ each publishersdata }}
                 <tr>
-                  <td class="text-center"><input type="checkbox"></td>
+                  <td class="text-center"><input data-id="{{ $value.Id }}" type="checkbox"></td>
                   <td>{{ $value.Name }}</td>
                   <td class="text-center">
-                    <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                    <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+                    <a href="categories?id={{ $value.Id }}&name=publisher" class="btn btn-info btn-xs">编辑</a>
+                    <a href="category-delete?id={{ $value.Id }}&name=publisher" class="btn btn-danger btn-xs">删除</a>
                   </td>
                 </tr>
               {{ /each }}
@@ -114,6 +163,66 @@
   {{include '../_partials/sidebar.html'}}
 
   <script src="../../public/vendors/jquery/jquery.js"></script>
+  <script type="text/javascript">
+      $(function($){
+      var $theadcheckbox=$('#category_table thead input')
+      var $tbodycheckboxs=$('#category_table tbody input')
+      var $btndelete=$('#btn_delete_cate')
+
+      var allcheckeds=[]
+      $tbodycheckboxs.on('change',function(){
+        var id=$(this).data('id')
+
+        if($(this).prop('checked')){
+          allcheckeds.push(id)
+        }else {
+          allcheckeds.splice(allcheckeds.indexOf(id),1);
+        }
+        allcheckeds.length ? $btndelete.fadeIn() : $btndelete.fadeOut();
+        $btndelete.prop('search','?id='+allcheckeds+'&name=category')
+      })
+
+      $theadcheckbox.on('change',function(){
+        allcheckeds=[]
+
+        var checked=$(this).prop('checked')
+
+        $tbodycheckboxs.prop('checked', checked).trigger('change')
+
+      })
+    })
+
+  </script>
+  <script type="text/javascript">
+      $(function($){
+      var $theadcheckbox=$('#publisher_table thead input')
+      var $tbodycheckboxs=$('#publisher_table tbody input')
+      var $btndelete=$('#btn_delete_pub')
+
+      var allcheckeds=[]
+      $tbodycheckboxs.on('change',function(){
+        var id=$(this).data('id')
+
+        if($(this).prop('checked')){
+          allcheckeds.push(id)
+        }else {
+          allcheckeds.splice(allcheckeds.indexOf(id),1);
+        }
+        allcheckeds.length ? $btndelete.fadeIn() : $btndelete.fadeOut();
+        $btndelete.prop('search','?id='+allcheckeds+'&name=publisher')
+      })
+
+      $theadcheckbox.on('change',function(){
+        allcheckeds=[]
+
+        var checked=$(this).prop('checked')
+
+        $tbodycheckboxs.prop('checked', checked).trigger('change')
+
+      })
+    })
+
+  </script>
   <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
   <script>NProgress.done()</script>
 </body>

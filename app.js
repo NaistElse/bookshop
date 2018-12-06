@@ -9,6 +9,7 @@ var bookdelete = require('./routes/admin/book-delete.js')
 var bookadd = require('./routes/admin/book-add.js')
 
 var categorypublisher = require('./routes/admin/category-publisher.js')
+var categorypublisherdelete = require('./routes/admin/category-publisher-delete.js')
 //var url = require('url')
 
 var app = express()
@@ -62,13 +63,9 @@ app.use(bookadd)
 
 app.use(categorypublisher)
 
+app.use(categorypublisherdelete)
 
 
-app.get('/categories' ,function(req,res) {
-  res.render('admin/categories.html', {
-    url: req.url
-  })
-})
 
 
 app.listen(3300, function() {
