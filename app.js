@@ -10,6 +10,12 @@ var bookadd = require('./routes/admin/book-add.js')
 
 var categorypublisher = require('./routes/admin/category-publisher.js')
 var categorypublisherdelete = require('./routes/admin/category-publisher-delete.js')
+
+
+var customer = require('./routes/admin/customer.js')
+
+
+var order = require('./routes/admin/order.js')
 //var url = require('url')
 
 var app = express()
@@ -64,6 +70,12 @@ app.use(bookadd)
 app.use(categorypublisher)
 
 app.use(categorypublisherdelete)
+
+
+app.use(customer)
+
+
+app.use(order)
 
 
 

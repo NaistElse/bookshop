@@ -17,11 +17,11 @@
         <li {{ url=== '/categories' ? ' class=active' : '' }}><a href="categories">分类目录</a></li>
       </ul>
     </li>
-    <li>
-      <a href="comments.html"><i class="fa fa-comments"></i>评论</a>
+    <li {{ url=== '/customer' ? ' class=active' : '' }}>
+      <a href="/customer"><i class="fa fa-comments"></i>用户</a>
     </li>
-    <li>
-      <a href="users.html"><i class="fa fa-users"></i>用户</a>
+    <li {{ url=== '/order' ? ' class=active' : '' }}>
+      <a href="/order"><i class="fa fa-users"></i>订单</a>
     </li>
     <li>
       <a href="#menu-settings" class="collapsed" data-toggle="collapse">
