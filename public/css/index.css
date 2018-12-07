@@ -1,0 +1,231 @@
+body{
+    font-size: 14px;
+    font-family: "Microsoft YaHei",sans-serif;
+    color: #333;
+}
+a{
+    text-decoration: none;
+    color: #333;
+}
+a:hover{
+    text-decoration: none;
+    color: #333;
+}
+
+
+/* TopBar */
+.bs_topBar{
+    border-bottom: 1px solid #ccc;
+    font-size: 12px;
+    color: #666;
+}
+.bs_topBar > .container{}
+.bs_topBar > .container > .row{}
+.bs_topBar > .container > .row > div{
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+.bs_topBar > .container > .row > div ~ div{
+    border-left: 1px solid #ccc;
+}
+
+.bs_topBar .btn-register{
+    border: none;
+    background: #e92322;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 12px;
+}
+.bs_topBar .btn-register:hover{
+
+}
+.bs_topBar .btn-login{
+    font-size: 12px;
+    color: #666;
+}
+.bs_topBar .btn-login:hover{
+    text-decoration: none;
+    color: #666;
+}
+
+
+/* 导航栏 */
+.bs_nav {
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    /*固定导航样式*/
+    z-index: 999999;
+    background: #fff;
+    width: 100%;
+    border-radius: 0;
+    top: 0;
+}
+.bs_nav .bs_icon_logo{
+    font-size: 50px;
+    color: #e92322;
+    vertical-align: middle;
+}
+.bs_nav .bs_icon_name{
+    font-size: 36px;
+    color: #333;
+    vertical-align: middle;
+}
+
+.bs_nav .navbar-brand {
+    color: #777;
+    height: 80px;
+    line-height: 50px;
+}
+.bs_nav .navbar-brand:hover,
+.bs_nav .navbar-brand:focus {
+    color: #5e5e5e;
+    background-color: transparent;
+}
+.bs_nav .navbar-text {
+    color: #777;
+}
+.bs_nav .navbar-nav > li > a {
+    color: #777;
+    height: 80px;
+    line-height: 50px;
+}
+.bs_nav .navbar-nav > li > a:hover,
+.bs_nav .navbar-nav > li > a:focus {
+    color: #777;
+    background-color: transparent;
+    border-bottom: 3px solid #e92322;
+}
+.bs_nav .navbar-nav > .active > a,
+.bs_nav .navbar-nav > .active > a:hover,
+.bs_nav .navbar-nav > .active > a:focus {
+    color: #555;
+    border-bottom: 3px solid #e92322;
+}
+.bs_nav .navbar-nav > .disabled > a,
+.bs_nav .navbar-nav > .disabled > a:hover,
+.bs_nav .navbar-nav > .disabled > a:focus {
+    color: #ccc;
+    background-color: transparent;
+}
+.bs_nav .navbar-toggle {
+    border-color: #ddd;
+    margin-top: 23px;
+}
+.bs_nav .navbar-toggle:hover,
+.bs_nav .navbar-toggle:focus {
+    background-color: #ddd;
+}
+.bs_nav .navbar-toggle .icon-bar {
+    background-color: #888;
+}
+.bs_nav .navbar-collapse,
+.bs_nav .navbar-form {
+    border-color: #e7e7e7;
+}
+.bs_nav .navbar-nav > .open > a,
+.bs_nav .navbar-nav > .open > a:hover,
+.bs_nav .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #e7e7e7;
+}
+@media (max-width: 767px) {
+    .bs_nav .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .bs_nav .navbar-nav .open .dropdown-menu > li > a:hover,
+    .bs_nav .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #333;
+        background-color: transparent;
+    }
+    .bs_nav .navbar-nav .open .dropdown-menu > .active > a,
+    .bs_nav .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .bs_nav .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #555;
+        background-color: #e7e7e7;
+    }
+    .bs_nav .navbar-nav .open .dropdown-menu > .disabled > a,
+    .bs_nav .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+    .bs_nav .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #ccc;
+        background-color: transparent;
+    }
+}
+.bs_nav .navbar-link {
+    color: #777;
+}
+.bs_nav .navbar-link:hover {
+    color: #333;
+}
+.bs_nav .btn-link {
+    color: #777;
+}
+.bs_nav .btn-link:hover,
+.bs_nav .btn-link:focus {
+    color: #333;
+}
+.bs_nav .btn-link[disabled]:hover,
+fieldset[disabled] .bs_nav .btn-link:hover,
+.bs_nav .btn-link[disabled]:focus,
+fieldset[disabled] .bs_nav .btn-link:focus {
+    color: #ccc;
+}
+
+
+/* 轮播图 */
+.bs_banner{
+  position: relative;
+  width: 100%;
+}
+
+.bs_banner .carousel-inner ul{
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+.bs_banner .carousel .carousel-inner ul li{
+  list-style: none;
+  float: left;
+}
+.bs_banner .carousel .carousel-inner ul li img{
+  display: block;
+  height: 400px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bs_banner image{
+    display: block;
+    height: 400px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bs_banner .pc_imgBox{
+    display: block;
+    height: 400px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bs_banner .m_imgBox{
+    display: block;
+    width: 100%;
+}
+.bs_banner .m_imgBox img{
+    display: block;
+    width: 100%;
+}
+
+
+/* 推荐 */
+.bs_recom .container{}
+.bs_recom .container .row{
+  padding-bottom: 15px;
+  padding-top: 5px;
+  padding-left: 20px;
+}

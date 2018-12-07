@@ -16,6 +16,11 @@ var customer = require('./routes/admin/customer.js')
 
 
 var order = require('./routes/admin/order.js')
+
+
+var webindex = require('./routes/web/index.js')
+var weblogin = require('./routes/web/login.js')
+var webregister = require('./routes/web/register.js')
 //var url = require('url')
 
 var app = express()
@@ -57,25 +62,21 @@ app.get('/' ,function(req,res) {
 
 
 app.use(booklistrouter)
-
 app.use(bookdetail)
-
 app.use(bookmodify)
-
 app.use(bookdelete)
-
 app.use(bookadd)
 
-
 app.use(categorypublisher)
-
 app.use(categorypublisherdelete)
-
 
 app.use(customer)
 
-
 app.use(order)
+
+app.use(webindex)
+app.use(weblogin)
+app.use(webregister)
 
 
 

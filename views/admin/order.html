@@ -33,27 +33,38 @@
             <thead>
                <tr>
                 <th class="text-center" width="40"><input type="checkbox"></th>
-                <th class="text-center" width="80">头像</th>
-                <th>邮箱</th>
-                <th>别名</th>
-                <th>昵称</th>
-                <th>状态</th>
+                <th class="text-center" width="80">订单ID</th>
+                <th>订单日期</th>
+                <th>客户名称</th>
+                <th>商品ID</th>
+                <th>商品名称</th>
+                <th>商品数量</th>
+                <th>商品单价</th>
+                <th>商品小结</th>
+                <th>订单总计</th>
                 <th class="text-center" width="100">操作</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td class="text-center"><img class="avatar" src="../../public/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
-                <td>激活</td>
-                <td class="text-center">
-                  <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
+              {{ each data }}
+                <tr>
+                  <td class="text-center"><input type="checkbox"></td>
+                  <td class="text-center">{{ $value.Id }}</td>
+                  <td>{{ $value.OrderDate }}</td>
+                  <td>{{ $value.coustom_name }}</td>
+                  <td>{{ $value.BookID }}</td>
+                  <td>{{ $value.Title }}</td>
+                  <td>{{ $value.Quantity }}</td>
+                  <td>{{ $value.book_price }}</td>
+                  <td>{{ $value.book_total }}</td>
+                  <td>{{ $value.TotalPrice }}</td>
+                  <td class="text-center">
+                    <!-- <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
+                    <a href="javascript:;" class="btn btn-danger btn-xs">删除</a> -->
+                  </td>
+                </tr>
+              {{ /each }}
+
             </tbody>
           </table>
       </div>
