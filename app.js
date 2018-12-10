@@ -2,6 +2,7 @@ var express = require('express')
 var path = require('path')
 var template = require('express-art-template')
 var bodyParser = require('body-parser')
+var session = require('express-session')
 var booklistrouter = require('./routes/admin/booklist.js')
 var bookdetail = require('./routes/admin/book-detail.js')
 var bookmodify = require('./routes/admin/book-modify.js')
@@ -48,10 +49,15 @@ app.set('view options',{
 })
 
 
-
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.use(session({
+  secret: 'mac',
+  resave: false,
+  saveUninitialized: false
+}))
+
 
 
 app.get('/' ,function(req,res) {
@@ -77,6 +83,8 @@ app.use(order)
 app.use(webindex)
 app.use(weblogin)
 app.use(webregister)
+
+app.use(require('./routes/web/index-banner.js'))
 
 
 

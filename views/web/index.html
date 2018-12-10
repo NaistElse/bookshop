@@ -68,10 +68,8 @@
 
         </ol>
         <div class="carousel-inner">
-          <ul>
-            <li><a href="#"><img src="/bookshop/static/images/banner1.jpg" alt=""></a></li>
-            <li><a href="#"><img src="/bookshop/static/images/banner2.jpg" alt=""></a></li>
-            <li><a href="#"><img src="/bookshop/static/images/banner3.jpg" alt=""></a></li>
+          <ul id="banner">
+
           </ul>
         </div>
         <a class="left carousel-control" href="#carousel-example-generic"  data-slide="prev">
@@ -246,6 +244,34 @@
 
 
     <script src="../../public/vendors/jquery/jquery.js"></script>
+    <script src="../../public/vendors/arttemplate/template.js"></script>
+
+
+    <script type="text/javascript">
+      $(function ($) {
+        var $banner = $('#banner')
+        $.ajax({
+          url: '/www/index-banner',
+          type: 'get',
+          dataType: 'json',
+          success: function (data) {
+            console.log(typeof data)
+            console.log(data)
+            var html = template('comment_tmp', data)
+            console.log(html)
+            $banner.html(html)
+          }
+        })
+      })
+    </script>
+
+    <script id="comment_tmp" type="text/art-template">
+    {{ error }}
+    {{ each src }}
+     <li><a href="#"><img src=""></a></li>
+    {{ /each }}
+    </script>
+
     <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
   </body>
 </html>

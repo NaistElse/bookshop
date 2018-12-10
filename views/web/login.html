@@ -9,18 +9,21 @@
 <body>
 
   <div class="main">
+    <div id="message" class="message alert-danger" style="display: none">
+      <p class="text-center"></p>
+    </div>
     <div class="header">
       <h1>用户登录</h1>
     </div>
     <form id="login_form">
       <div class="form-group">
-        <label for="">邮箱</label>
-        <input type="email" class="form-control" id="" name="email" placeholder="Email" autofocus>
+        <label for="">用户名</label>
+        <input type="text" class="form-control" name="loginId" placeholder="loginId" autofocus>
       </div>
       <div class="form-group">
         <label for="">密码</label>
         <a class="pull-right" href="">忘记密码？</a>
-        <input type="password" class="form-control" id="" name="password" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password">
       </div>
       <div class="checkbox">
         <label>
@@ -36,6 +39,28 @@
 
 
 <script src="../../public/vendors/jquery/jquery.js"></script>
+<script type="text/javascript">
+  $('#login_form').on('submit', function (e) {
+    e.preventDefault()
+    var formData = $(this).serialize()
+    $.ajax({
+      url: '/web/login',
+      type: 'post',
+      data: formData,
+      dataType: 'json',
+      success: function (data) {
+        if(data.error === 1) {
+          $('#message').fadeIn()
+          $('#message p').html(data.message)
+        } else if (data.error ===0) {
+          $('#message').fadeIn()
+          $('#message p').html(data.message)
+          window.location.href = '/www'
+        }
+     }
+    })
+  })
+</script>
 <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
 </body>
 </html>

@@ -5,9 +5,15 @@ var db = mysql.createPool({host: 'localhost', user: 'root', password: '123456', 
 
 var router = express.Router()
 
+
 router.get('/www', function (req,res) {
-  res.render('web/index.html')
+  var user = req.session['user']
+
+  res.render('web/index.html', {
+    user,
+  })
 })
+
 
 
 module.exports = router

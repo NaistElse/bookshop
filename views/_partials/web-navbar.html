@@ -14,8 +14,14 @@
           <a href="#">常见问题</a>
       </div>
       <div class="col-md-3">
+        {{ if user }}
+         <a href="javascript:;" class="btn btn-success">欢迎你:{{ user.Name }}</a>
+         <a href="javascript:;" class="btn btn-danger">退出登录</a>
+        {{ else }}
           <a href="web/register" class="btn btn-default btn-register">注册</a>
           <a href="web/login" class="btn btn-link btn-login">登录</a>
+        {{ /if }}
+
       </div>
   </div>
 </div>
