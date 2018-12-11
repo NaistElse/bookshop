@@ -9,21 +9,24 @@
 <body>
 
   <div class="main">
+    <div id="message" class="message alert-danger" style="display: none">
+      <p class="text-center"></p>
+    </div>
     <div class="header">
       <h1>用户注册</h1>
     </div>
     <form id="register_form" method="post" action="/register">
       <div class="form-group">
-        <label for="email">邮箱</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus>
-      </div>
-      <div class="form-group">
-        <label for="nickname">昵称</label>
-        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname">
+        <label for="name">用户名</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="name" autocomplete="off">
       </div>
       <div class="form-group">
         <label for="password">密码</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="passwordagain">请在输入密码</label>
+        <input type="password" class="form-control" id="passwordagain" name="passwordagain" placeholder="Password">
       </div>
       <button type="submit" class="btn btn-success btn-block">注册</button>
     </form>
@@ -34,6 +37,37 @@
 
 
 <script src="../../public/vendors/jquery/jquery.js"></script>
+<script type="text/javascript">
+  $('#register_form').on('submit', function (e) {
+    e.preventDefault()
+    var formData = $(this).serialize()
+    $.ajax({
+      url: '/web/register',
+      type: 'post',
+      data: formData,
+      dataType: 'json',
+      success: function (data) {
+        if(data.error === 1) {
+          $('#message').fadeIn()
+          $('#message p').html(data.message)
+        } else if (data.error ===2) {
+          $('#message').fadeIn()
+          $('#message p').html(data.message)
+        } else if (data.error ===3) {
+          $('#message').fadeIn()
+          $('#message p').html(data.message)
+        } else if (data.error ===0) {
+          $('#message').fadeIn()
+          $('#message p').html(data.message)
+          setTimeout(function () {
+            window.location.href = '/web/login' 
+          },1000)
+        }
+     }
+    })
+  })
+
+</script>
 <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
 </body>
 </html>
