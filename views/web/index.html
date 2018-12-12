@@ -127,7 +127,7 @@
         <div class="page-header">
           <h1 class="text-center">热门图书 TOP 9 <small>最受读者喜爱的图书</small></h1>
         </div>
-        <div class="row">
+        <div id="topbook" class="row">
           {{ each data }}
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
@@ -135,7 +135,7 @@
               <div class="caption">
                 <h3>{{ $value.Title }}</h3>
                 <p>{{ $value.Author }}</p>
-                <div><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></div>
+                <div><a id="addcart" data-id="{{ $value.Id }}" href="javascript:;" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></div>
               </div>
             </div>
           </div>
@@ -203,7 +203,7 @@
         $('#bookget').html(html)
       })
 
-      $('#btn_move').on('click', function() {
+      $('#btn_move').on('click', function () {
         page++
         $.ajax({
           url: '/www/index-banner',
@@ -237,6 +237,24 @@
           $('#bookget').html(html)
         })
       })
+
+      $('#topbook').on('click','#addcart', function (e) {
+        e.preventDefault()
+        var id = parseInt($(this).data('id'))
+        $.ajax({
+          url: '/www/addcart',
+          type: 'GET',
+          dataType: 'json',
+          data: {id: id}
+        })
+        .then(function (data) {
+          console.log(data)
+        })
+
+
+      })
+
+
     </script>
 
   </body>

@@ -3,6 +3,8 @@ var path = require('path')
 var template = require('express-art-template')
 var bodyParser = require('body-parser')
 var session = require('express-session')
+var multer = require('multer')
+var multerObj = multer({dest: './public/upload'})
 var booklistrouter = require('./routes/admin/booklist.js')
 var bookdetail = require('./routes/admin/book-detail.js')
 var bookmodify = require('./routes/admin/book-modify.js')
@@ -51,6 +53,7 @@ app.set('view options',{
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(multerObj.any())
 
 app.use(session({
   secret: 'mac',
@@ -85,6 +88,7 @@ app.use(weblogin)
 app.use(webregister)
 
 app.use(require('./routes/web/index-banner.js'))
+app.use(require('./routes/web/addcart.js'))
 
 
 
