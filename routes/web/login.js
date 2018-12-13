@@ -33,7 +33,7 @@ router.post('/web/login', function (req,res) {
       })
     }
     req.session.user = data[0]
-
+    //req.cookies['user'] = data[0]
     res.json({
       error: 0,
       message: '登录成功'

@@ -7,61 +7,45 @@
     <title>BookShop</title>
     <link href="../../public/vendors/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../../public/css/index.css" rel="stylesheet">
+    <style media="screen">
+      .thumbnail{
+        position:relative;
+        width: 280px;
+        height: 390px;
+      }
+      .thumbnail img{
+        width:150px;
+        height:200px;
+      }
+      .thumbnail .caption{}
+      .thumbnail .caption h3{
+        font-size: 18px;
+      }
+      .thumbnail .caption p{
+        font-size: 16px;
+        position: absolute;
+        bottom: 50px;
+      }
+      .thumbnail .caption div{
+        position: absolute;
+        bottom: 10px;
+      }
+    </style>
   </head>
   <body>
 
     <!-- 顶部通栏 -->
     <header class="bs_topBar hidden-sm hidden-xs">
-      <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <a href="#" class="bs_app">
-                    <span></span>
-                    <span>网上书城</span>
-                </a>
-            </div>
-            <div class="col-md-5">
-                <span></span>
-                <a href="#">捐赠图书</a>
-            </div>
-            <div class="col-md-2">
-                <a href="#">常见问题</a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="btn btn-default btn-register">注册</a>
-                <a href="#" class="btn btn-link btn-login">登录</a>
-            </div>
-        </div>
-      </div>
+
+      {{include '../_partials/web-navbar.html'}}
+
     </header>
 
     <!-- 导航栏 -->
     <nav class="navbar bs_nav" data-spy="affix" data-offset-top="200">
-      <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-                <span></span>
-                <span></span>
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">热门图书</a></li>
-                <li class="active">
-                  <a href="#">图书分类</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right hidden-sm">
-                <li><a href="#">个人中心</a></li>
-            </ul>
-        </div>
-    </div>
+
+      {{include '../_partials/web-topbar.html'}}
+
     </nav>
 
     <!-- 路径导航 -->
@@ -70,7 +54,7 @@
         <ol class="breadcrumb">
           <li><a href="#">首页</a></li>
           <li><a href="#">图书分类</a></li>
-          <li class="active">C#</li>
+          <li class="active">{{ categoryname }}</li>
         </ol>
       </div>
     </nav>
@@ -79,58 +63,49 @@
     <section class="bs_book">
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
-              <li role="presentation" class="active"><a href="#">C#</a></li>
-              <li role="presentation"><a href="#">c++</a></li>
-              <li role="presentation"><a href="#">java</a></li>
+              {{ each categorydata }}
+                <li role="presentation" {{ categoryid == $value.Id ? ' class=active' : '' }}><a href="/www/category?categoryid={{ $value.Id }}">{{ $value.Name }}</a></li>
+              {{ /each }}
             </ul>
           </div>
-          <div class="col-md-8">
-
+          <div class="col-md-9">
               <div class="row">
-                <div class="col-md-4">
-                  <div class="thumbnail">
-                    <img src="/bookshop/static/images/book1.jpg" alt="...">
-                    <div class="caption">
-                      <h3>C#</h3>
-                      <p>从入门到精通</p>
-                      <p><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></p>
+                {{ each data }}
+                  <div class="col-md-4">
+                    <div class="thumbnail">
+                      <img src="../../public/images/BookCovers/{{ $value.ISBN }}.jpg" alt="...">
+                      <div class="caption">
+                        <h3>{{ $value.Title }}</h3>
+                        <p><span style="color:red;font-size:18px;">${{ $value.UnitPrice }}</span></p>
+                        <div><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></div>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="thumbnail">
-                    <img src="/bookshop/static/images/book1.jpg" alt="...">
-                    <div class="caption">
-                      <h3>C#</h3>
-                      <p>从入门到精通</p>
-                      <p><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="thumbnail">
-                    <img src="/bookshop/static/images/book1.jpg" alt="...">
-                    <div class="caption">
-                      <h3>C#</h3>
-                      <p>从入门到精通</p>
-                      <p><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="thumbnail">
-                    <img src="/bookshop/static/images/book1.jpg" alt="...">
-                    <div class="caption">
-                      <h3>C#</h3>
-                      <p>从入门到精通</p>
-                      <p><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="#" class="btn btn-danger" role="button">我喜欢</a></p>
-                    </div>
-                  </div>
+                {{ /each }}
+              </div>
+              <div class="row">
+                <div class="pull-right">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <li>
+                        <a href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#">4</a></li>
+                      <li><a href="#">5</a></li>
+                      <li>
+                        <a href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
               </div>
             </div>
@@ -140,10 +115,10 @@
 
 
 
+
+
     <!-- 底部通栏 -->
     <footer></footer>
-
-
 
 
     <script src="../../public/vendors/jquery/jquery.js"></script>
