@@ -6,25 +6,6 @@ var session = require('express-session')
 var cookieParser = require('cookie-parser')
 var multer = require('multer')
 var multerObj = multer({dest: './public/upload'})
-var booklistrouter = require('./routes/admin/booklist.js')
-var bookdetail = require('./routes/admin/book-detail.js')
-var bookmodify = require('./routes/admin/book-modify.js')
-var bookdelete = require('./routes/admin/book-delete.js')
-var bookadd = require('./routes/admin/book-add.js')
-
-var categorypublisher = require('./routes/admin/category-publisher.js')
-var categorypublisherdelete = require('./routes/admin/category-publisher-delete.js')
-
-
-var customer = require('./routes/admin/customer.js')
-
-
-var order = require('./routes/admin/order.js')
-
-
-var webindex = require('./routes/web/index.js')
-var weblogin = require('./routes/web/login.js')
-var webregister = require('./routes/web/register.js')
 //var url = require('url')
 
 var app = express()
@@ -66,35 +47,30 @@ app.use(session({
 
 
 
+app.use(require('./routes/admin/index.js'))
+app.use(require('./routes/admin/login.js'))
+app.use(require('./routes/admin/booklist.js'))
+app.use(require('./routes/admin/book-detail.js'))
+app.use(require('./routes/admin/book-modify.js'))
+app.use(require('./routes/admin/book-delete.js'))
+app.use(require('./routes/admin/book-add.js'))
 
-app.get('/' ,function(req,res) {
-  res.render('admin/index.html' ,{
-    url: req.url
-  })
-})
+app.use(require('./routes/admin/category-publisher.js'))
+app.use(require('./routes/admin/category-publisher-delete.js'))
 
+app.use(require('./routes/admin/customer.js'))
 
-app.use(booklistrouter)
-app.use(bookdetail)
-app.use(bookmodify)
-app.use(bookdelete)
-app.use(bookadd)
+app.use(require('./routes/admin/order.js'))
 
-app.use(categorypublisher)
-app.use(categorypublisherdelete)
-
-app.use(customer)
-
-app.use(order)
-
-app.use(webindex)
-app.use(weblogin)
-app.use(webregister)
+app.use(require('./routes/web/index.js'))
+app.use(require('./routes/web/login.js'))
+app.use(require('./routes/web/register.js'))
 
 app.use(require('./routes/web/index-banner.js'))
 app.use(require('./routes/web/addcart.js'))
 app.use(require('./routes/web/ilike.js'))
 app.use(require('./routes/web/category.js'))
+app.use(require('./routes/web/signout.js'))
 
 
 

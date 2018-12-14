@@ -6,6 +6,9 @@ var db = mysql.createPool({host: 'localhost', user: 'root', password: '123456', 
 var router = express.Router()
 
 router.get('/category-delete', function (req,res) {
+  if (!req.session['admin']) {
+    return res.redirect('/login')
+  }
 
   var query = req.query
 

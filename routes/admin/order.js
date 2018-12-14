@@ -8,6 +8,10 @@ var router = express.Router()
 
 router.get('/order' ,function (req,res) {
 
+  if (!req.session['admin']) {
+    return res.redirect('/login')
+  }
+
   db.query(`SELECT orders.Id,orders.OrderDate,users.Name as coustom_name,
             orderbook.BookID,books.Title,books.UnitPrice as book_price,orderbook.Quantity,
             orderbook.UnitPrice as book_total,orders.TotalPrice

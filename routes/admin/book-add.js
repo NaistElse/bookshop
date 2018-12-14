@@ -14,6 +14,10 @@ var message = {
 
 router.get('/book-add' ,function (req,res) {
 
+  if (!req.session['admin']) {
+    return res.redirect('/login')
+  }
+
   db.query(`SELECT * from categories` ,function (err,categoriesdata) {
     if (err) {
       console.log(err)

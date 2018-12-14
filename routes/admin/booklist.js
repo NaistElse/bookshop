@@ -40,6 +40,9 @@ var total_pages = 0
 
 
 router.get('/booklist' ,function(req,res) {
+  if (!req.session['admin']) {
+    return res.redirect('/login')
+  }
 
 
   var page = req.query.page ? parseInt(req.query.page) : 1

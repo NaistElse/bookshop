@@ -6,6 +6,10 @@ var db=mysql.createPool({host: 'localhost', user: 'root', password: '123456', da
 var router = express.Router()
 
 router.get('/book-detail' , function (req,res) {
+  if (!req.session['admin']) {
+    return res.redirect('/login')
+  }
+  
   db.query(`SELECT books.Id,books.Title,books.Author,publishers.Name as Publishername,books.PublishDate,books.ISBN,
             books.WordsCount,books.UnitPrice,
             books.ContentDescription,books.AurhorDescription,books.EditorComment,books.TOC,

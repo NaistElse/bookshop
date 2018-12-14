@@ -12,6 +12,9 @@ var message = {
 }
 
 router.get('/customer', function (req,res) {
+  if (!req.session['admin']) {
+    return res.redirect('/login')
+  }
 
   var query = req.query
 
