@@ -156,7 +156,7 @@
           {{ each data }}
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-              <img src="../../public/images/BookCovers/{{ $value.ISBN }}.jpg" alt="...">
+              <a href="/www/bookdetail?id={{ $value.Id }}"><img src="../../public/images/BookCovers/{{ $value.ISBN }}.jpg" style="width:150px;height:200px;" alt="..."></a>
               <div class="caption">
                 <h3>{{ $value.Title }}</h3>
                 <p>{{ $value.Author }}</p>
@@ -238,7 +238,7 @@
 
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <img style="width:200px;height:250px;" src="../../public/images/BookCovers/${bookdata.data[i].ISBN}.jpg" alt="..." class="img-rounded">
+              <a href="/www/bookdetail?id=${bookdata.data[i].Id}"><img style="width:200px;height:250px;" src="../../public/images/BookCovers/${bookdata.data[i].ISBN}.jpg" alt="..." class="img-rounded"></a>
             </div>
           </div>
           <hr/>`
@@ -272,7 +272,7 @@
 
               </div>
               <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <img style="width:200px;height:250px;" src="../../public/images/BookCovers/${bookdata.data[i].ISBN}.jpg" alt="..." class="img-rounded">
+                <a href="/www/bookdetail?id=${bookdata.data[i].Id}"><img style="width:200px;height:250px;" src="../../public/images/BookCovers/${bookdata.data[i].ISBN}.jpg" alt="..." class="img-rounded"></a>
               </div>
             </div>
             <hr/>`
@@ -291,7 +291,7 @@
           url: '/www/addcart',
           type: 'GET',
           dataType: 'json',
-          data: {id: id}
+          data: {id: id,count:1}
         })
         .then(function (data) {
           if(data.error === 0) {
@@ -300,6 +300,9 @@
             $('#myModal').modal()
           } else if (data.error === 1) {
             window.location.href = '/web/login'
+          } else if (data.error === 3) {
+            $('#myModal .modal-body').html('你已经添加过啦')
+            $('#myModal').modal()
           }
         })
       })

@@ -9,6 +9,10 @@ router.get('/web/login', function (req,res) {
   res.render('web/login.html')
 })
 
+router.get('/www/web/login', function (req,res) {
+  res.render('web/login.html')
+})
+
 router.post('/web/login', function (req,res) {
   var user = req.body
   if(user.loginId === '' || user.password === '') {

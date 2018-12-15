@@ -12,6 +12,13 @@ router.get('/web/signout', function (req,res) {
   }
 })
 
+router.get('/www/web/signout', function (req,res) {
+  if(req.url === '/www/web/signout') {
+    req.session['user'] = null
+    res.redirect('/web/login')
+  }
+})
+
 
 
 module.exports = router

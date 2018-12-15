@@ -229,3 +229,38 @@ fieldset[disabled] .bs_nav .btn-link:focus {
   padding-top: 5px;
   padding-left: 20px;
 }
+
+
+
+/* 图书细节页面 */
+
+/* bookdtail */
+
+.bookdetail{}
+.bookdetail .bookcover{}
+.bookdetail .bookcover img{
+  width: 200px;
+  height: 282px;
+  margin: 50px 0px 0px 70px;
+}
+.bookdetail .bookinfo span:nth-child(2n+1){
+  color: red;
+}
+.bookdetail .bookinfo div{
+  margin-top: 10px;
+}
+.bookdetail .bookinfo .bookprice{
+  width: 100%;
+  height: 70px;
+  background: #ccc;
+}
+.bookdetail .bookinfo .bookprice p{
+  margin-left: 20px;
+}
+.bookdetail .bookinfo .bookprice p span:nth-child(2n){
+  line-height: 70px;
+}
+
+.booktoc{
+  margin-top: 50px;
+}

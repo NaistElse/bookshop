@@ -9,6 +9,10 @@ router.get('/web/register', function (req,res) {
   res.render('web/register.html')
 })
 
+router.get('/www/web/register', function (req,res) {
+  res.render('web/register.html')
+})
+
 router.post('/web/register', function (req,res) {
   var user = req.body
   if (!user.name || !user.password || !user.passwordagain){

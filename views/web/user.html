@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link href="../../public/vendors/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="../../public/css/index.css" rel="stylesheet">
+</head>
+<body>
+  <!-- 顶部通栏 -->
+  <header class="bs_topBar hidden-sm hidden-xs">
+
+    {{include '../_partials/web-navbar.html'}}
+
+  </header>
+
+  <!-- 欢迎通栏 -->
+  <section>
+    <div class="container">
+      <div class="page-header">
+        <h1>欢迎进入购物车 <small>admin</small></h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- 商品通栏 -->
+  <section>
+    <div class="container">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th class="text-center" width="40"><input type="checkbox"></th>
+            <th>标题</th>
+            <th>作者</th>
+            <th class="text-center">售价</th>
+            <th class="text-center">数量</th>
+            <th class="text-center">总计</th>
+            <th class="text-center" width="100">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {{ each data }}
+            <tr>
+              <td class="text-center"><input type="checkbox"></td>
+              <td>{{ $value.Title }}</td>
+              <td>{{ $value.Author }}</td>
+              <td class="text-center">{{ $value.UnitPrice }}</td>
+              <td class="text-center" style="width:150px;">
+                <input type="button" value="-">
+                <input style="width:30px;" type="text" value="{{ $value.count }}">
+                <input type="button" value="+">
+              </td>
+              <td class="text-center">{{ $value.UnitPrice * $value.count }}</td>
+              <td class="text-center">
+                <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+              </td>
+            </tr>
+          {{ /each }}
+
+
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- 付款通栏 -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="pull-right">
+            <h4>当前总价:</h4>
+            <h1 style="color:red;">$123</h1>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="text-center" style="padding-top:50px;">
+            <a href="javascript:;" class="btn btn-danger">去付款</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="../../public/vendors/jquery/jquery.js"></script>
+  <script type="text/javascript">
+
+
+  </script>
+  <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
+</body>
+</html>

@@ -72,6 +72,9 @@ app.use(require('./routes/web/ilike.js'))
 app.use(require('./routes/web/category.js'))
 app.use(require('./routes/web/signout.js'))
 
+app.use(require('./routes/web/bookdetail.js'))
+app.use(require('./routes/web/user.js'))
+
 
 
 
