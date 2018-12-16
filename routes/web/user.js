@@ -16,8 +16,8 @@ router.get('/www/user', function (req,res) {
   }
   var user = req.session['user']
   var user_id = parseInt(req.session['user'].Id)
-  var user_id = 18
-  var book = []
+  // var user_id = 18
+  var books = []
   var bookid = []
 
   fs.readFile('./data/user-cart.json','utf8', function (err,data) {

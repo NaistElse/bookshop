@@ -89,6 +89,41 @@
 
   <script src="../../public/vendors/jquery/jquery.js"></script>
   <script type="text/javascript">
+    var $tr = $('table tbody tr')
+    $tr.on('click', ':button:first', function() {
+      var price = $(this).parent().prev().html()
+      var count = $(this).next().val()
+      count --
+      if (count <= 1) {
+        count = 1
+      }
+      $(this).next().val(count)
+      $(this).parent().next().html(count * price)
+    })
+
+    $tr.on('blur', ':text', function() {
+      var price = $(this).parent().prev().html()
+      if ($(this).val() < 0) {
+        $(this).val(1)
+      }
+      // if(typeof $(this).val() !== 'number') {
+      //   $(this).val(1)
+      // }
+      var count = $(this).val()
+      $(this).parent().next().html(count * price)
+    })
+
+    $tr.on('click', ':button:last', function() {
+      var price = $(this).parent().prev().html()
+      var count = $(this).prev().val()
+      count ++
+      $(this).prev().val(count)
+      $(this).parent().next().html(count * price)
+    })
+
+
+
+
 
 
   </script>
