@@ -39,14 +39,16 @@ router.get('/www/addcart', function (req,res) {
         cart: [
           {
             book_id: book_id,
-            count: count
+            count: count,
+            select: false
           }
         ]
       }
 
       var cartbookobj = {
         book_id: book_id,
-        count: count
+        count: count,
+        select: false
       }
 
       cart.forEach(function (item) {

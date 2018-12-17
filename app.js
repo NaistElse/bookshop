@@ -74,6 +74,7 @@ app.use(require('./routes/web/signout.js'))
 
 app.use(require('./routes/web/bookdetail.js'))
 app.use(require('./routes/web/user.js'))
+app.use(require('./routes/web/modifycart.js'))
 
 
 
