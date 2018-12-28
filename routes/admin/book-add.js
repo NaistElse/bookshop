@@ -1,7 +1,7 @@
 var express = require('express')
-var mysql = require('mysql')
-
-var db = mysql.createPool({host: 'localhost', user: 'root', password: '123456', database: 'bookshop'});
+var fs = require('fs')
+var pathLib = require('path')
+var db = require('../../function.config.js')
 
 var router = express.Router()
 
@@ -84,10 +84,25 @@ router.post('/book-add', function (req,res) {
             query: query
           })
       }
-
-      res.render('admin/book-add.html',{
-        url: req.url,
-        messages: message.success
+      var files = req.files
+      var ext = pathLib.parse(files[0].originalname).ext
+      var newFileName = query.ISBN + ext
+      var oldPath = files[0].path
+      var newPath = files[0].destination + '/' + newFileName
+      fs.rename(oldPath, newPath, function (err) {
+        if (err) {
+          return res.render('admin/book-add.html',{
+            url: req.url,
+            categoriesdata: categoriesdata,
+            publishersdata: publishersdata,
+            messages: message.error,
+            query: query
+          })
+        }
+        res.render('admin/book-add.html',{
+          url: req.url,
+          messages: message.success
+        })
       })
     })
    })

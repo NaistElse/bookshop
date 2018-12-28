@@ -1,8 +1,7 @@
 var express = require('express')
-var mysql = require('mysql')
 var fs = require('fs')
+var db = require('../../function.config.js')
 
-var db = mysql.createPool({host: 'localhost', user: 'root', password: '123456', database: 'bookshop'})
 
 var router = express.Router()
 
