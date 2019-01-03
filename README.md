@@ -31,20 +31,20 @@
 ### 1. 数据库设计:
 1. 数据库名称: `bookshop`
 
-2. 数据库关系图:  ![1546497987381](C:\Users\Applestore2\AppData\Roaming\Typora\typora-user-images\1546497987381.png)
+2. 数据库关系图:  ![数据库关系图](./数据库关系图.png)
 
 ### 2. 服务端设计:
 1. `app.js` 入口程序
     由于是`Express` 框架  和 `art-tempalte` 模板引擎，先下载相关依赖包 `npm i express express-art-tempalte`
 
      ```javascript
-    var express = require('express') 
+    var express = require('express')
     var template = require('express-art-template')
-    
+
     var app = express() // 创建服务器
-    
+
     app.engine('html', template) // 以 html 后缀的为模板引擎
-    
+
     app.listen(3300, function() { // 服务器监听端口为 3300
       console.log('server is running at 3300...')
     })
@@ -54,14 +54,14 @@
 
     ```javascript
     var path = require('path')
-    
+
     app.use('/public/', express.static(path.join(__dirname, './public/'))) // 在文件夹public 中的所有内容为静态资源，可以任意访问
     app.use('/node_modules/', express.static(path.join(__dirname, './node_modules/')))
     ```
 
 2. `booklist` 图书列表界面的实现
 
-    路由设计: 
+    路由设计:
 
     |    url    | 方式 |             值             |
     | :-------: | :--: | :------------------------: |
@@ -72,10 +72,10 @@
     ```javascript
     var express = require('express')
     var db = require('../../function.config.js')
-    
+
     var router = express.Router() //创建路由
     router.get('/booklist' ,function(req,res) {})
-    
+
     module.exports = router //把这个路由暴露出去
     ```
 
@@ -85,7 +85,7 @@
 
     ```javascript
     var mysql = require('mysql')
-    
+
     module.exports = mysql.createPool({host: 'localhost', user: 'root', password: '123456', database: 'bookshop'})
     ```
 
@@ -93,26 +93,26 @@
 
     ```javascript
     var page = req.query.page ? parseInt(req.query.page) : 1
-    
+
     var size = 20  // 每页数量为20
     var where = '1 = 1' // 种类及其出版社分类
     var search = '' // 传到前端的
     var total_pages = 0  // 总页数
-    
+
     if (page < 1){  
       page = 1
     }
-    
+
     if(req.query.category && req.query.category !== 'all') {
        where += ' and books.CategoryId = ' + req.query.category
        search += '&category=' + req.query.category
     }
-    
+
     if(req.query.publishers && req.query.publishers !== 'all') {
        where += ' and books.PublisherId = ' + req.query.publishers
        search += '&publishers=' + req.query.publishers
     }
-    
+
     db.query(`SELECT COUNT(1) as count FROM books
               INNER JOIN publishers ON publishers.Id=books.PublisherId
               INNER JOIN categories ON categories.Id=books.CategoryId
@@ -121,35 +121,35 @@
       if (err) {
         return res.status(500).send('database error').end()
       }
-    
+
       total_pages = parseInt(Math.ceil(data[0].count / size)) // 计算出前段传过来种类及出版社的总页数
-    
+
       if (page > total_pages) {  // 如果page大于总页数就让它等于总页数
         page = total_pages
       }
     })
-    
+
     var offset = (page - 1) * size  // 当前是第几页
-    
+
     db.query(`SELECT books.Id,books.Title,books.Author,publishers.Name as publishername,books.PublishDate,books.ISBN,books.UnitPrice
                 FROM books
                 INNER JOIN publishers ON publishers.Id = books.PublisherId
                 WHERE ${where}
                 LIMIT ${offset},${size}` ,function () {}) // 得到的数据就是前端所想要的数据
-    
+
       var visiable = 5 // 定义所显示的页码数
-    
+
       var begin = page - (visiable -1 ) / 2  // 当前开始的页码数
       var end = begin + visiable - 1 // 当前结束的页码数
-    
+
     // =============== 处理分页的逻辑 =====================
-      begin = begin < 1 ? 1 : begin 
+      begin = begin < 1 ? 1 : begin
       end = begin + visiable - 1
       end = end > total_pages ? total_pages : end
       begin = end - visiable +1
       begin = begin < 1 ? 1 : begin
-    
-    
+
+
       var pagination ={ // 定义一个分页对象，传到模板引擎
         begin,
         page,
@@ -157,13 +157,13 @@
         total_pages,
         search
       }
-      
+
       res.render('admin/booklist.html', { // 渲染模板引擎
           url: req.url, // 当前的url
-          booklistdata: booklistdata, // 当前的所索引的图书 
+          booklistdata: booklistdata, // 当前的所索引的图书
           categoriesdata: categoriesdata, // 所有的种类
           publishersdata: publishersdata, // 所有的出版社
-          query: req.query, 
+          query: req.query,
           pagination: pagination // 分页信息
        })
     ```
@@ -198,10 +198,10 @@
          var y = a.getFullYear()
          var m = a.getMonth() + 1
          var d = a.getDate()
-    
+
          var M = m < 10 ? ('0' + m) : m
          var D = d < 10 ? ('0' + d) : d
-    
+
          return y + '-' + M + '-' + D
        }
       }
@@ -215,11 +215,11 @@
             var $theadcheckbox=$('thead input')
             var $tbodycheckboxs=$('tbody input')
             var $btndelete=$('#btn_delete')
-    
+
             var allcheckeds=[]
             $tbodycheckboxs.on('change',function(){
               var id=$(this).data('id')
-    
+
               if($(this).prop('checked')){
                 allcheckeds.push(id)
               }else {
@@ -228,21 +228,21 @@
               allcheckeds.length ? $btndelete.fadeIn() : $btndelete.fadeOut()
               $btndelete.prop('search','?id='+allcheckeds)
             });
-    
+
             $theadcheckbox.on('change',function(){
               allcheckeds=[]
-    
+
               var checked=$(this).prop('checked')
-    
+
               $tbodycheckboxs.prop('checked', checked).trigger('change')
-    
+
             })
           })
     ```
 
 3. `book-detail`图书单个信息的实现
 
-    路由设计: 
+    路由设计:
 
     |     url      | 方式 |  值  |
     | :----------: | :--: | :--: |
@@ -263,7 +263,7 @@
 
 4. `book-add`图书增加界面的实现
 
-    路由设计: 
+    路由设计:
 
     |    url    | 方式 |       值       |
     | :-------: | :--: | :------------: |
@@ -274,7 +274,7 @@
 
     ```javascript
     var bodyParser = require('body-parser')
-    
+
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json()) // 解析以JSON格式存放
     ```
@@ -288,16 +288,16 @@
                   '${query.toc}',${parseInt(query.category)},0)` , function () {})
     ```
 
-    这个页面最重要的为文件(图片) 的上传 需要安装 `npm i multer `这个依赖项，具体配置如下: 
+    这个页面最重要的为文件(图片) 的上传 需要安装 `npm i multer `这个依赖项，具体配置如下:
 
     ```javascript
     var multer = require('multer')
     var multerObj = multer({dest: './public/upload'}) // 文件上传的文件夹
-    
+
     app.use(multerObj.any()) // 不限文件的格式
     ```
 
-    文件上传代码如下: 
+    文件上传代码如下:
 
     ```javascript
       var files = req.files
@@ -305,7 +305,7 @@
       var newFileName = query.ISBN + ext // 新文件以图书的ISBN为名
       var oldPath = files[0].path // 文件的旧的路径名
       var newPath = files[0].destination + '/' + newFileName // 文件新的路径名
-      
+
       // 因为只要文件上传，目标文件夹就有在了，所以要改路径
       fs.rename(oldPath, newPath, function () {}） // 改文件的路径
     ```
@@ -397,7 +397,7 @@
 
     ```javascript
     var session = require('express-session')
-    
+
     app.use(session({
       secret: 'mac',  // 密钥
       resave: false,
@@ -501,14 +501,14 @@
          }
          var user_id = parseInt(req.session['user'].Id)  // 获取当前登录用户的id
          var book_id = parseInt(req.query.id)  // 获取所选图书的id
-       
+
          var count = parseInt(req.query.count)  // 获取想要加入购物车图书的数量
-       
+
          var user = req.session['user']
-       
+
          var isuser = false
          var isbook = false
-       
+
          fs.readFile('./data/user-cart.json','utf8', function (err,data) {
            if (err) {
              return res.json({
@@ -517,7 +517,7 @@
                })
            }
              var cart = JSON.parse(data)
-       
+
              var cartobj = {  // 创建一个购物车对象
                user_id: user_id, // 用户id
                cart: [
@@ -528,16 +528,16 @@
                  }
                ]
              }
-       
+
              var cartbookobj = {  // 创建一个图书对象
                book_id: book_id,
                count: count,
                select: false
              }
-       
+
              cart.forEach(function (item) { // 查询购物车里有没有当前用户id
                if (item.user_id === user_id) {
-                 isuser = true 
+                 isuser = true
                  item.cart.forEach(function (item) {
                    if (item.book_id === book_id) {  // 查询当前用户名中有没有当前所选的书
                      isbook = true
@@ -546,7 +546,7 @@
                  })
                }
              })
-       
+
              if (isbook === false) {  // 没有图书就push
                cart.forEach(function (item) {
                  if (item.user_id === user_id) {
@@ -559,12 +559,12 @@
                  message: '你已经添加过啦'
                })
              }
-       
+
              if (isuser === false) { // 没有当前用户id，就push
                cart.push(cartobj)
              }
-       
-       
+
+
              fs.writeFile('./data/user-cart.json',JSON.stringify(cart), function (err) {
                if (err) {
                  return res.json({
@@ -581,5 +581,3 @@
        ```
 
    + 然后页面就是各种AJAX 应用
-
-
