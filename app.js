@@ -48,6 +48,7 @@ app.use(session({
 
 
 app.use(require('./routes/admin/index.js'))
+app.use(require('./routes/admin/index-data.js'))
 app.use(require('./routes/admin/login.js'))
 app.use(require('./routes/admin/booklist.js'))
 app.use(require('./routes/admin/book-detail.js'))
@@ -75,6 +76,7 @@ app.use(require('./routes/web/signout.js'))
 app.use(require('./routes/web/bookdetail.js'))
 app.use(require('./routes/web/user.js'))
 app.use(require('./routes/web/modifycart.js'))
+app.use(require('./routes/web/pay.js'))
 
 
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>个人中心</title>
   <link href="../../public/vendors/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link href="../../public/css/index.css" rel="stylesheet">
 </head>
@@ -80,7 +80,7 @@
         <div class="col-md-2">
           <div class="text-center" style="padding-top:50px;">
             <a id="savecart" href="javascript:;" class="btn btn-success" style="margin-bottom: 10px;">保存购物车状态</a>
-            <a href="javascript:;" class="btn btn-danger">去付款</a>
+            <a id="gopay" href="javascript:;" class="btn btn-danger">去付款</a>
           </div>
         </div>
       </div>
@@ -93,14 +93,28 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">消息</h4>
+            <h4 class="modal-title" id="myModalLabel">所选图书</h4>
           </div>
           <div class="modal-body">
-            已添加到购物车
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <td>标题</td>
+                  <td>作者</td>
+                  <td>售价</td>
+                  <td>数量</td>
+                  <td>总计</td>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
           </div>
           <div class="modal-footer">
-             <button type="button" class="btn btn-danger" data-dismiss="modal">购物车</button>
-             <button type="button" class="btn btn-sucess">再看看</button>
+             <div class="btn btn-sucess" data-dismiss="modal">总价为<p class="price" style="color:red;"></p></div>
+             <button type="button" class="btn btn-danger" data-dismiss="modal">再看看</button>
+             <button id="pay" type="button" class="btn btn-sucess">去付款</button>
            </div>
         </div>
       </div>
@@ -301,6 +315,62 @@
       })
 
 
+    })
+
+    $('#gopay').on('click', function() {
+      var cart = JSON.parse(localStorage.getItem('user_cart'))
+      var obj = []
+      cart.some(function (item) {
+        if(item.select === true) {
+          obj.push(item)
+        }
+      })
+      var html = ''
+      if(obj.length === 0) {
+        html = `<h3>亲~这边建议您先选图书呢</h3>`
+      } else {
+        obj.forEach(function (item) {
+          html += `
+          <tr>
+            <td>${ item.Title }</td>
+            <td>${ item.Author }</td>
+            <td>${ item.UnitPrice }</td>
+            <td>${ item.count }</td>
+            <td>${ item.UnitPrice * item.count }</td>
+          </tr>`
+        })
+      }
+      var allprice = 0
+      obj.some(function (item) {
+        allprice += item.UnitPrice * item.count
+      })
+      $('#myModal .modal-footer .price').html(allprice)
+      $('#myModal .modal-body table tbody').html(html)
+      $('#myModal').modal()
+    })
+
+    $('#pay').on('click', function() {
+      var cart = JSON.parse(localStorage.getItem('user_cart'))
+      var obj = []
+      cart.some(function (item) {
+        if(item.select === true) {
+          obj.push(item)
+        }
+      })
+      $.ajax({
+        url: '/pay',
+        type: 'get',
+        dataType: 'json',
+        data: { data:obj }
+      })
+      .then(function(data) {
+        if (data.error === 0) {
+          alert('付款成功，请查收快递')
+          window.location.href = '/www'
+        } else if (data.error === 1) {
+          alert(data.message)
+        }
+      })
     })
 
   </script>

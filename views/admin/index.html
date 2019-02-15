@@ -2,7 +2,14 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>Dashboard &laquo; Admin</title>
+  <title>管理首页</title>
+  <style media="screen">
+    .charts{
+      display: flex;
+      justify-content: space-between;
+      padding: 50px;
+    }
+  </style>
   <link rel="stylesheet" href="../../public/vendors/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="../../public/vendors/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="../../public/vendors/nprogress/nprogress.css">
@@ -18,32 +25,143 @@
 
     <div class="container-fluid">
       <div class="jumbotron text-center">
-        <h1>One Belt, One Road</h1>
-        <p>Thoughts, stories and ideas.</p>
-        <p><a class="btn btn-primary btn-lg" href="post-add.html" role="button">写文章</a></p>
+        <h1>Thought is already is late, exactly is the earliest time</h1>
+        <p>Not matter of the today will drag tomorrow</p>
+        <p><a class="btn btn-primary btn-lg" href="book-add" role="button">上架新的图书</a></p>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">站点内容统计： </h3>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item"><strong>10</strong>篇文章（<strong>2</strong>篇草稿）</li>
-              <li class="list-group-item"><strong>6</strong>个分类</li>
-              <li class="list-group-item"><strong>5</strong>条评论（<strong>1</strong>条待审核）</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
-      </div>
+    </div>
+    <div class="charts">
+      <div id="books-data" style="width: 800px;height:600px;"></div>
+      <div id="orders-data" style="width: 800px;height:600px;"></div>
     </div>
   </div>
 
   {{include '../_partials/sidebar.html'}}
 
   <script src="../../public/vendors/jquery/jquery.js"></script>
+  <script src="../../public/vendors/echarts/echarts.common.min.js"></script>
+  <script type="text/javascript">
+    $.ajax({
+      url: '/index-data',
+      type: 'get',
+      dataType: 'json'
+    })
+    .then(function (data){
+      var myChart1 = echarts.init(document.getElementById('books-data'))
+      var option1 = {
+        backgroundColor: '#2c343c',
+
+        title: {
+            text: '各类图书数量详情',
+            left: 'center',
+            top: 20,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
+            }
+        },
+        series : [
+            {
+                name:'网站统计',
+                type:'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:data.message[0].sort(function (a, b) { return a.value - b.value; }),
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#c23531',
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+      }
+      myChart1.setOption(option1)
+
+      var myChart2 = echarts.init(document.getElementById('orders-data'))
+
+      var dateList = data.message[1].map(function (item) {
+          return item.date
+      })
+      var valueList = data.message[1].map(function (item) {
+          return item.totalprice
+      })
+      var option2 = {
+
+        visualMap: {
+            show: false,
+            type: 'continuous',
+            seriesIndex: 0,
+            min: 0,
+            max: 400
+        },
+        title: {
+            left: 'center',
+            text: '日销售金额'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            data: dateList
+        },
+        yAxis: {
+            splitLine: {show: false}
+        },
+        grid: {
+            bottom: '20%'
+        },
+        series: {
+            type: 'line',
+            showSymbol: false,
+            data: valueList
+        }
+      }
+      myChart2.setOption(option2)
+    })
+
+
+
+
+  </script>
   <script src="../../public/vendors/bootstrap/js/bootstrap.js"></script>
   <script>NProgress.done()</script>
 </body>
